@@ -3,77 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <title>Para ti</title>
+
 <style>
-    body {
-        margin: 0;
-        font-family: 'Arial', sans-serif;
-        background: linear-gradient(135deg, #1e1e2f, #3a3a5f);
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        text-align: center;
-    }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470') no-repeat center center/cover;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    overflow: hidden;
+}
 
-    .container {
-        max-width: 600px;
-        padding: 20px;
-    }
+.container {
+    max-width: 600px;
+    padding: 20px;
+    z-index: 2;
+}
 
-    h1 {
-        font-size: 2.5em;
-        margin-bottom: 20px;
-    }
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
 
-    button {
-        padding: 12px 25px;
-        font-size: 16px;
-        border: none;
-        border-radius: 25px;
-        background: #ff4b6e;
-        color: white;
-        cursor: pointer;
-        transition: 0.3s;
-    }
+button {
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    background: #ff4b6e;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
 
-    button:hover {
-        background: #ff2e57;
-    }
+button:hover {
+    background: #ff2e57;
+}
 
-    #mensaje {
-        margin-top: 30px;
-        font-size: 18px;
-        line-height: 1.6;
-        opacity: 0;
-        transition: opacity 2s;
-        white-space: pre-line;
-    }
+#mensaje {
+    margin-top: 30px;
+    font-size: 18px;
+    line-height: 1.6;
+    opacity: 0;
+    transition: opacity 1s;
+    white-space: pre-line;
+}
 
-    .heart {
-        font-size: 40px;
-        margin-top: 20px;
-        animation: latido 1s infinite;
-    }
+.heart {
+    font-size: 40px;
+    margin-top: 20px;
+    animation: latido 1s infinite;
+}
 
-    @keyframes latido {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.2); }
-        100% { transform: scale(1); }
-    }
+@keyframes latido {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+#particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
 </style>
 </head>
+
 <body>
 
+<div id="particles"></div>
+
 <div class="container">
-    <h1>Tengo algo para ti…</h1>
-    <button onclick="mostrarMensaje()">Haz clic aquí</button>
+    <h1>No sabía cómo decirte esto…</h1>
+    <button onclick="iniciar()">Ábrelo cuando estés lista</button>
 
     <div id="mensaje"></div>
     <div class="heart" id="heart" style="display:none;">❤️</div>
 </div>
 
+<!-- Música -->
+<audio id="musica" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Partículas -->
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+
 <script>
+function iniciar() {
+    document.getElementById("musica").play();
+    mostrarMensaje();
+}
+
 function mostrarMensaje() {
     const texto = `Leí todo lo que me escribiste… y no te voy a mentir, me dolió, pero también me hizo recordar todo lo que fuimos.
 
@@ -92,14 +118,36 @@ Pero lo que sentí por ti fue real, y lo que siento todavía también lo es.
 Si este es el final, solo quiero que te quedes con algo claro:
 sí te amé, sí fuiste importante… y siempre vas a tener un lugar en mí.
 
-Gracias por todo lo que fuimos.`;
+Gracias por todo lo que fuimos.
+
+Si esto es un adiós… quiero que sepas que siempre te voy a querer.`;
 
     const mensaje = document.getElementById("mensaje");
-    mensaje.innerText = texto;
     mensaje.style.opacity = 1;
 
-    document.getElementById("heart").style.display = "block";
+    let i = 0;
+    function escribir() {
+        if (i < texto.length) {
+            mensaje.innerHTML += texto.charAt(i);
+            i++;
+            setTimeout(escribir, 30);
+        } else {
+            document.getElementById("heart").style.display = "block";
+        }
+    }
+
+    escribir();
 }
+
+// Partículas
+tsParticles.load("particles", {
+  particles: {
+    number: { value: 60 },
+    size: { value: 3 },
+    move: { enable: true, speed: 1 },
+    opacity: { value: 0.5 }
+  }
+});
 </script>
 
 </body>
