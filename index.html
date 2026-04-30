@@ -15,9 +15,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     text-align: center;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 body::before {
@@ -30,7 +30,7 @@ body::before {
 }
 
 .container {
-    max-width: 600px;
+    max-width: 650px;
     padding: 20px;
     z-index: 2;
     position: relative;
@@ -41,22 +41,43 @@ button {
     border-radius: 25px;
     background: #ff4b6e;
     color: white;
+    border: none;
     cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
 }
 
 #mensaje {
     margin-top: 30px;
     opacity: 0;
     white-space: pre-line;
+    text-align: left;
+    line-height: 1.6;
 }
 
 .heart {
     font-size: 40px;
     animation: latido 1s infinite;
+    display: none;
+    margin-top: 20px;
 }
 
 @keyframes latido {
     50% { transform: scale(1.2); }
+}
+
+/* BOTÓN WHATSAPP */
+#whatsappContainer {
+    display: none;
+    margin-top: 25px;
+}
+
+#whatsappContainer button {
+    background: #25D366;
 }
 </style>
 </head>
@@ -64,11 +85,18 @@ button {
 <body>
 
 <div class="container">
-    <h1>No sabía cómo decirte esto…</h1>
-    <button onclick="iniciar()">Ábrelo cuando estés lista</button>
+    <h1>Te extraño</h1>
+    <button onclick="iniciar()">Haz click aquí</button>
 
     <div id="mensaje"></div>
-    <div class="heart" id="heart" style="display:none;">❤️</div>
+
+    <div class="heart" id="heart">🤍</div>
+
+    <div id="whatsappContainer">
+        <a id="whatsappLink" target="_blank">
+            <button>Enviar mensaje 💬</button>
+        </a>
+    </div>
 </div>
 
 <audio id="musica" loop>
@@ -82,7 +110,6 @@ button {
 <script>
 function iniciar() {
     const musica = document.getElementById("musica");
-    musica.playbackRate = 1;
     musica.volume = 0.5;
     musica.play().catch(()=>{});
 
@@ -90,11 +117,32 @@ function iniciar() {
 }
 
 function mostrarMensaje() {
-    const texto = `Leí todo lo que me escribiste… y no te voy a mentir, me dolió, pero también me hizo recordar todo lo que fuimos.
 
-Yo todavía te amo.
+const texto = `Leí todo lo que me escribiste… y no te voy a mentir, me dolió mucho, pero también me hizo pensar en todo lo que fuimos.
 
-Tal vez no supe demostrarlo como tú lo necesitabas...`;
+Quiero empezar diciéndote algo que no deberías seguir dudando, yo todavía te amo. Tal vez no de la forma en que tú lo necesitabas o lo esperabas,
+y entiendo por qué llegaste a sentir todo eso, pero nunca fue que dejaras de importarme o que ya no sintiera nada por ti. Me duele saber que te sentiste
+sola, ignorada o poco importante, porque de verdad nunca quise hacerte sentir así… y ahí es donde sí tengo que aceptar que fallé, que no supe
+estar como lo necesitabas, o mejor dicho, como debía estarlo.
+
+Tú fuiste demasiado importante para mí, y lo sigues siendo. No eres alguien que simplemente pasa y ya, fueron años contigo, creciendo juntos,
+conociéndonos y amandonos, eso no se borra ni se reemplaza así como así. Tú marcaste mi vida, y eso es algo que siempre voy a llevar conmigo.
+
+Sobre el tiempo que me pediste… quiero que entiendas algo, porque sé que desde tu lado se sintió como indiferencia. No fue así. 
+Yo respeté ese tiempo porque era lo que tú querías, porque pensé que era lo correcto para ti, aunque por dentro me estuviera muriendo por
+buscarte, o por simplemente saber cómo estabas.
+
+También sé que muchas veces no entendí tu dolor, y eso me pesa. Me enfoqué en lo mío y no supe ver todo lo que tú estabas pasando por mi culpa.
+
+Nunca quise ni esperé hacerte llegar hasta estos límites y lo siento, de verdad lo siento. Yo aun me imagino una vida contigo y la sigo deseando
+desde que nos propusimos irnos a vivir juntos, aún lo considero una meta de mi vida y la mayor razon para seguir adelante en mi día a día y aún
+no se como podría reestructurar mi vida en tu ausencia.
+
+Si esto es tu manera de decir adiós, solo quiero que recuerdes esto: sí fuiste importante, sí te amé, y probablemente siempre te ame de alguna forma.
+
+Con mucho amor, tu eterno amante 🤍.
+
+`;
 
     const mensaje = document.getElementById("mensaje");
     mensaje.style.opacity = 1;
@@ -107,7 +155,6 @@ Tal vez no supe demostrarlo como tú lo necesitabas...`;
         if (i < texto.length) {
             mensaje.innerHTML += texto.charAt(i);
 
-            // sonido cada 3 letras (evita saturación)
             if (i % 3 === 0) {
                 typingSound.currentTime = 0;
                 typingSound.play().catch(()=>{});
@@ -115,19 +162,29 @@ Tal vez no supe demostrarlo como tú lo necesitabas...`;
 
             i++;
 
-            let delay = 60 + Math.random() * 80;
+            let delay = 45 + Math.random() * 60;
 
-            // pausas naturales
             if (texto[i] === "." || texto[i] === "," || texto[i] === "\n") {
-                delay += 200;
+                delay += 150;
             }
 
             setTimeout(escribir, delay);
 
         } else {
             typingSound.pause();
-            typingSound.currentTime = 0;
+
             document.getElementById("heart").style.display = "block";
+
+            // 👉 BOTÓN WHATSAPP
+            const container = document.getElementById("whatsappContainer");
+            const link = document.getElementById("whatsappLink");
+
+            const phone = "573128231503";
+            const message = "Te extraño mucho, por favor enviame un mensaje, te necesito";
+
+            link.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+            container.style.display = "block";
         }
     }
 
