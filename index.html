@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para ti</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, #1e1e2f, #3a3a5f);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+    }
+
+    .container {
+        max-width: 600px;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+    }
+
+    button {
+        padding: 12px 25px;
+        font-size: 16px;
+        border: none;
+        border-radius: 25px;
+        background: #ff4b6e;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #ff2e57;
+    }
+
+    #mensaje {
+        margin-top: 30px;
+        font-size: 18px;
+        line-height: 1.6;
+        opacity: 0;
+        transition: opacity 2s;
+        white-space: pre-line;
+    }
+
+    .heart {
+        font-size: 40px;
+        margin-top: 20px;
+        animation: latido 1s infinite;
+    }
+
+    @keyframes latido {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Tengo algo para ti…</h1>
+    <button onclick="mostrarMensaje()">Haz clic aquí</button>
+
+    <div id="mensaje"></div>
+    <div class="heart" id="heart" style="display:none;">❤️</div>
+</div>
+
+<script>
+function mostrarMensaje() {
+    const texto = `Leí todo lo que me escribiste… y no te voy a mentir, me dolió, pero también me hizo recordar todo lo que fuimos.
+
+Yo todavía te amo.
+
+Tal vez no supe demostrarlo como tú lo necesitabas, y entiendo por qué te sentiste así… pero nunca fue que dejaras de importarme. Nunca.
+
+Tú fuiste demasiado importante para mí, y lo sigues siendo. No eres algo que simplemente se olvida, porque crecimos juntos… y eso se queda para siempre.
+
+El tiempo que me pediste lo respeté, pero no porque no me importaras… sino porque me importabas tanto que no quise fallarte en lo único que me habías pedido, aunque por dentro me costara demasiado no buscarte.
+
+Sé que fallé, sé que no entendí muchas cosas… y lo siento. De verdad.
+
+Pero lo que sentí por ti fue real, y lo que siento todavía también lo es.
+
+Si este es el final, solo quiero que te quedes con algo claro:
+sí te amé, sí fuiste importante… y siempre vas a tener un lugar en mí.
+
+Gracias por todo lo que fuimos.`;
+
+    const mensaje = document.getElementById("mensaje");
+    mensaje.innerText = texto;
+    mensaje.style.opacity = 1;
+
+    document.getElementById("heart").style.display = "block";
+}
+</script>
+
+</body>
+</html>
