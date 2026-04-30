@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Para ti</title>
 
-<!-- Fuente máquina de escribir -->
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
 
 <style>
@@ -21,12 +20,9 @@ body {
     overflow: hidden;
 }
 
-/* Oscurecer fondo */
 body::before {
     content: "";
     position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.6);
@@ -40,59 +36,32 @@ body::before {
     position: relative;
 }
 
-h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-}
-
 button {
     padding: 12px 25px;
-    font-size: 16px;
-    border: none;
     border-radius: 25px;
     background: #ff4b6e;
     color: white;
     cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: #ff2e57;
 }
 
 #mensaje {
     margin-top: 30px;
-    font-size: 18px;
-    line-height: 1.6;
     opacity: 0;
-    transition: opacity 1s;
     white-space: pre-line;
 }
 
 .heart {
     font-size: 40px;
-    margin-top: 20px;
     animation: latido 1s infinite;
 }
 
 @keyframes latido {
-    0% { transform: scale(1); }
     50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-
-#particles {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
 }
 </style>
 </head>
 
 <body>
-
-<div id="particles"></div>
 
 <div class="container">
     <h1>No sabía cómo decirte esto…</h1>
@@ -102,24 +71,20 @@ button:hover {
     <div class="heart" id="heart" style="display:none;">❤️</div>
 </div>
 
-<!-- Música de fondo -->
 <audio id="musica" loop>
   <source src="stilllovingyou.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Sonido máquina de escribir -->
 <audio id="typingSound">
   <source src="typing.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Partículas -->
-<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
-
 <script>
 function iniciar() {
     const musica = document.getElementById("musica");
-    musica.playbackRate = 0.7;
-    musica.play();
+    musica.playbackRate = 0.6;
+    musica.volume = 0.5;
+    musica.play().catch(()=>{});
 
     mostrarMensaje();
 }
@@ -129,56 +94,45 @@ function mostrarMensaje() {
 
 Yo todavía te amo.
 
-Tal vez no supe demostrarlo como tú lo necesitabas, y entiendo por qué te sentiste así… pero nunca fue que dejaras de importarme. Nunca.
-
-Tú fuiste demasiado importante para mí, y lo sigues siendo. No eres algo que simplemente se olvida, porque crecimos juntos… y eso se queda para siempre.
-
-El tiempo que me pediste lo respeté, pero no porque no me importaras… sino porque me importabas tanto que no quise fallarte en lo único que me habías pedido, aunque por dentro me costara demasiado no buscarte.
-
-Sé que fallé, sé que no entendí muchas cosas… y lo siento. De verdad.
-
-Pero lo que sentí por ti fue real, y lo que siento todavía también lo es.
-
-Si este es el final, solo quiero que te quedes con algo claro:
-sí te amé, sí fuiste importante… y siempre vas a tener un lugar en mí.
-
-Gracias por todo lo que fuimos.
-
-Si esto es un adiós… quiero que sepas que siempre te voy a querer.`;
+Tal vez no supe demostrarlo como tú lo necesitabas...`;
 
     const mensaje = document.getElementById("mensaje");
     mensaje.style.opacity = 1;
 
     let i = 0;
     const typingSound = document.getElementById("typingSound");
+    typingSound.volume = 0.25;
 
     function escribir() {
         if (i < texto.length) {
             mensaje.innerHTML += texto.charAt(i);
 
-            // reiniciar sonido para efecto continuo
-            typingSound.currentTime = 0;
-            typingSound.play();
+            // sonido cada 3 letras (evita saturación)
+            if (i % 3 === 0) {
+                typingSound.currentTime = 0;
+                typingSound.play().catch(()=>{});
+            }
 
             i++;
-            setTimeout(escribir, 25);
+
+            let delay = 60 + Math.random() * 80;
+
+            // pausas naturales
+            if (texto[i] === "." || texto[i] === "," || texto[i] === "\n") {
+                delay += 200;
+            }
+
+            setTimeout(escribir, delay);
+
         } else {
+            typingSound.pause();
+            typingSound.currentTime = 0;
             document.getElementById("heart").style.display = "block";
         }
     }
 
     escribir();
 }
-
-// Partículas
-tsParticles.load("particles", {
-  particles: {
-    number: { value: 60 },
-    size: { value: 3 },
-    move: { enable: true, speed: 1 },
-    opacity: { value: 0.5 }
-  }
-});
 </script>
 
 </body>
