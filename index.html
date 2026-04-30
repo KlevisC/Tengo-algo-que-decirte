@@ -117,7 +117,10 @@ button:hover {
 
 <script>
 function iniciar() {
-    document.getElementById("musica").play();
+    const musica = document.getElementById("musica");
+    musica.playbackRate = 0.7;
+    musica.play();
+
     mostrarMensaje();
 }
 
