@@ -29,11 +29,13 @@ body::before {
     z-index: 1;
 }
 
+/* 🔥 ESCALA GLOBAL X4 */
 .container {
     max-width: 650px;
     padding: 20px;
     z-index: 2;
     position: relative;
+    font-size: 4em; /* 👈 AQUI está el aumento X4 */
 }
 
 button {
@@ -43,7 +45,7 @@ button {
     color: white;
     border: none;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 0.5em; /* ajustado para que no explote */
     transition: 0.3s;
 }
 
@@ -57,10 +59,11 @@ button:hover {
     white-space: pre-line;
     text-align: left;
     line-height: 1.6;
+    font-size: 0.45em; /* mantiene legibilidad dentro del X4 */
 }
 
 .heart {
-    font-size: 40px;
+    font-size: 1em;
     animation: latido 1s infinite;
     display: none;
     margin-top: 20px;
@@ -78,6 +81,7 @@ button:hover {
 
 #whatsappContainer button {
     background: #25D366;
+    font-size: 0.5em;
 }
 </style>
 </head>
@@ -94,7 +98,7 @@ button:hover {
 
     <div id="whatsappContainer">
         <a id="whatsappLink" target="_blank">
-            <button>❗</button>
+            <button>Enviar mensaje 💬</button>
         </a>
     </div>
 </div>
@@ -129,19 +133,15 @@ Tú fuiste demasiado importante para mí, y lo sigues siendo. No eres alguien qu
 conociéndonos y amandonos, eso no se borra ni se reemplaza así como así. Tú marcaste mi vida, y eso es algo que siempre voy a llevar conmigo.
 
 Sobre el tiempo que me pediste… quiero que entiendas algo, porque sé que desde tu lado se sintió como indiferencia. No fue así. 
-Yo respeté ese tiempo porque era lo que tú querías, porque pensé que era lo correcto para ti, que solo necesitabas estar un tiempo en paz para luego
-volver conmigo, aunque por dentro me estuviera muriendo porbuscarte, o por simplemente saber cómo estabas.
+Yo respeté ese tiempo porque era lo que tú querías, porque pensé que era lo correcto para ti, aunque por dentro me estuviera muriendo por buscarte.
 
-También sé que muchas veces no entendí tu dolor, y eso me pesa. Me enfoqué en lo mío y no supe ver todo lo que tú estabas pasando por mi culpa.
+También sé que muchas veces no entendí tu dolor, y eso me pesa.
 
-Nunca quise ni esperé hacerte llegar hasta estos límites y lo siento, de verdad lo siento. Yo aun me imagino una vida contigo y la sigo deseando
-desde que nos propusimos irnos a vivir juntos, aún lo considero una meta de mi vida y la mayor razon para seguir adelante en mi día a día y aún
-no se como podría reestructurar mi vida en tu ausencia.
+Nunca quise ni esperé hacerte llegar hasta estos límites y lo siento.
 
 Si esto es tu manera de decir adiós, solo quiero que recuerdes esto: sí fuiste importante, sí te amé, y probablemente siempre te ame de alguna forma.
 
 Con mucho amor, tu eterno amante.
-
 `;
 
     const mensaje = document.getElementById("mensaje");
@@ -175,7 +175,6 @@ Con mucho amor, tu eterno amante.
 
             document.getElementById("heart").style.display = "block";
 
-            // 👉 BOTÓN WHATSAPP
             const container = document.getElementById("whatsappContainer");
             const link = document.getElementById("whatsappLink");
 
